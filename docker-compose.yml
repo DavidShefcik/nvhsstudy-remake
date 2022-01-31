@@ -1,0 +1,68 @@
+version: "3"
+
+services:
+  reverse-proxy:
+    container_name: nvhsstudy-reverse-proxy
+    image: traefik:v2.2
+    command: --api.insecure=true --providers.docker
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  postgres:
+    container_name: nvhsstudy-postgres
+    image: postgres:11
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - "pgdata:/var/lib/postgresql/data/"
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: nvhsstudy
+
+  redis:
+    container_name: nvhsstudy-redis
+    image: redis
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - "redisdata:/data"
+
+  backend:
+    container_name: nvhsstudy-backend
+    image: node:16
+    command: yarn workspace api start:dev
+    ports:
+      - "127.0.0.1:1337:1337"
+    volumes:
+      - .:/srv/backend:rw
+    working_dir: /srv/backend
+    env_file:
+      - ./api/.env
+    depends_on:
+      - redis
+      - postgres
+    labels:
+      - "traefik.http.routers.backend.rule=Host(`api.nvhsstudy.localhost`)"
+
+  frontend:
+    command: yarn workspace frontend dev
+    image: node:16
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - .:/srv/frontend:rw
+    working_dir: /srv/frontend
+    depends_on:
+      - backend
+    labels:
+      - "traefik.http.routers.frontend.rule=Host(`nvhsstudy.localhost`)"
+
+volumes:
+  pgdata: {}
+  redisdata: {}

@@ -1,0 +1,11 @@
+.footer a,
+.footer a:active,
+.footer a:focus {
+  color: var(--chakra-colors-brand-100);
+  text-decoration: none;
+  transition: color 0.02s linear;
+}
+.footer a:hover {
+  color: var(--chakra-colors-brand-500);
+  text-decoration: none;
+}

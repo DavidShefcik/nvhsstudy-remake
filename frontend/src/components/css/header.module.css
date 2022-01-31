@@ -1,0 +1,11 @@
+.header a,
+.header a:active,
+.header a:focus {
+  color: #e8e8e8;
+  text-decoration: none;
+  transition: color 0.02s linear;
+}
+.header a:hover {
+  color: white;
+  text-decoration: none;
+}
