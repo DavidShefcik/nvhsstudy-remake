@@ -1,7 +1,29 @@
-import { useMediaQuery } from "@chakra-ui/react";
+import { useState, useEffect, useCallback } from "react";
+
+const MAXIMUM_MOBILE_SIZE = 768;
 
 export default function useIsMobile(): boolean {
-  const [isSmallerThan769] = useMediaQuery("(max-width: 769px)");
+  const [isMobile, setIsMobile] = useState(false);
 
-  return isSmallerThan769;
+  const handleResize = useCallback(() => {
+    const windowWidth = window.innerWidth;
+
+    if (windowWidth > MAXIMUM_MOBILE_SIZE) {
+      setIsMobile(false);
+    } else if (windowWidth <= MAXIMUM_MOBILE_SIZE) {
+      setIsMobile(true);
+    }
+  }, [setIsMobile]);
+
+  useEffect(() => {
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  return isMobile;
 }

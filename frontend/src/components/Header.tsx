@@ -27,6 +27,7 @@ export default function Header() {
   };
 
   useEffect(() => {
+    console.log("is mobile", isMobile);
     setMobileMenuOpen(false);
   }, [isMobile]);
 

@@ -13,7 +13,7 @@ import NextLink from "next/link";
 
 import sessionContext, { Session } from "~/context/session";
 import useIsMobile from "~/hooks/useIsMobile";
-import HomeBox, { LINE_DIRECTION } from "~/components/HomeBox";
+import HomeBox from "~/components/HomeBox";
 
 export default function Home() {
   const { loggedIn } = useContext<Session>(sessionContext);
