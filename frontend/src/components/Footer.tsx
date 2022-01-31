@@ -23,7 +23,7 @@ const footerItems: FooterItem[] = [
   },
   {
     text: "GitHub",
-    link: "https://github.com/DavidShefcik/nvhsstudy",
+    link: "https://github.com/DavidShefcik/nvhsstudy-remake",
     external: true,
   },
 ];
