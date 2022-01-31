@@ -67,24 +67,35 @@ export default function Header() {
       zIndex="10"
       className={styles.header}
     >
-      <Link as={NextLink} href="/" title="Neuqua Study">
-        {imageError ? (
-          <Text color="white" fontSize="2xl" cursor="pointer">
-            Neuqua Study
-          </Text>
-        ) : (
-          <Image
-            src="/logo.png"
-            alt=""
-            onError={() => setImageError(true)}
-            height="45px"
-            marginTop="3px"
-            marginLeft="-20px"
-            cursor="pointer"
-          />
-        )}
-      </Link>
-      <Box>{rightItems}</Box>
+      <Flex
+        width={isMobile ? "auto" : "30%"}
+        justifyContent={isMobile ? "flex-start" : "center"}
+      >
+        <Link as={NextLink} href="/" title="Neuqua Study">
+          {imageError ? (
+            <Text color="white" fontSize="2xl" cursor="pointer">
+              Neuqua Study
+            </Text>
+          ) : (
+            <Image
+              src="/logo.png"
+              alt=""
+              onError={() => setImageError(true)}
+              height="45px"
+              marginTop="3px"
+              marginLeft="-20px"
+              cursor="pointer"
+            />
+          )}
+        </Link>
+      </Flex>
+      <Flex
+        width={isMobile ? "auto" : "70%"}
+        justifyContent={isMobile ? "flex-end" : "center"}
+        paddingLeft={isMobile ? "0" : "15%"}
+      >
+        {rightItems}
+      </Flex>
     </Flex>
   );
 }
