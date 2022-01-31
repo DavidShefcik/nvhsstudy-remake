@@ -54,7 +54,7 @@ export default function Footer() {
           }
 
           return (
-            <Link {...linkProps}>
+            <Link key={link} {...linkProps}>
               {external ? (
                 <>
                   {text}
