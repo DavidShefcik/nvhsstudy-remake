@@ -14,7 +14,6 @@ export default function ErrorPage({ title, subtitle }: Props) {
       justifyContent="center"
       alignItems="center"
       width="100%"
-      height="100vh"
       overflow="hidden"
     >
       <Text fontSize="3xl">{title}</Text>
