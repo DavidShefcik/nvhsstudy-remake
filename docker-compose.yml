@@ -18,7 +18,7 @@ services:
     image: postgres:11
     restart: always
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     volumes:
       - "pgdata:/var/lib/postgresql/data/"
     environment:
@@ -48,9 +48,12 @@ services:
       - redis
       - postgres
     labels:
-      - "traefik.http.routers.backend.rule=Host(`api.nvhsstudy.localhost`)"
+      - "traefik.http.routers.api.rule=Host(`nvhsstudy.localhost`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.api.middlewares=api-stripprefix"
+      - "traefik.http.middlewares.api-stripprefix.stripprefix.prefixes=/api"
 
   frontend:
+    container_name: nvhsstudy-frontend
     command: yarn workspace frontend dev
     image: node:16
     ports:
